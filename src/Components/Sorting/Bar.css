@@ -1,0 +1,39 @@
+@import "tailwindcss";
+.bar {
+  width: 25px;
+  margin: 0 8px;
+  border-radius: 6px 6px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text {
+  transform: rotate(-90deg);
+  text-align: center;
+  width: 80px;
+  background: transparent;
+  color: white;
+  font-size: 14px;
+  outline: none;
+  border: none;
+}
+
+.quantity-button {
+  text-align: center;
+  background: #345;
+  margin: 1px;
+  cursor: pointer;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* universal no-spinner */
+input[type="number"] {
+  appearance: textfield;
+  -moz-appearance: textfield; /* Firefox fallback */
+}

@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+.queue-page {
+  min-height: 100vh;
+  /* background: #121419; */
+  padding-top: 6rem; /* space under fixed navbar */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* queue container */
+.queue {
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+/* each element in the queue */
+.element {
+  list-style: none;
+  color: aliceblue;
+  background: #393e46;
+  height: 2em;
+  width: 2em;
+  border: 4px solid #1254be;
+  margin: 0;
+  font-size: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.element:hover {
+  background: #4cb4e9;
+  color: #424b53;
+}
+
+/* empty state */
+.empty {
+  list-style: none;
+  color: aliceblue;
+  background: #1254be;
+  border: 4px solid #393e46;
+  padding: 1em 1.5em;
+  font-size: 32px;
+  border-radius: 0.5rem;
+}

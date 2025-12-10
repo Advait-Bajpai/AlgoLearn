@@ -1,0 +1,271 @@
+/* ==== TREE CONTAINER ===================================================== */
+
+.tree {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.tree ul {
+  padding: 0;
+  padding-top: 1.25rem;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.tree > ul {
+  display: table;
+  margin: 0 auto;
+}
+
+.tree li {
+  float: left;
+  text-align: center;
+  list-style-type: none;
+  position: relative;
+  padding: 0.75rem 0.25rem 0 0.25rem;
+  transition: all 0.3s ease;
+}
+
+/* ==== CONNECTOR LINES ==================================================== */
+
+.tree li::before,
+.tree li::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 50%;
+  border-top: 1px solid #4b5563; /* gray-600 */
+  width: 50%;
+  height: 10px;
+  transition: all 0.3s ease;
+}
+
+.tree li::after {
+  right: auto;
+  left: 50%;
+  border-left: 1px solid #4b5563;
+}
+
+.tree li:last-child::before {
+  border-right: 1px solid #4b5563;
+  border-radius: 0 6px 0 0;
+}
+
+.tree li:first-child::after {
+  border-radius: 6px 0 0 0;
+}
+
+.tree ul ul::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  border-left: 1px solid #4b5563;
+  width: 0;
+  height: 1.25rem;
+  transition: all 0.3s ease;
+}
+
+/* single child: no connectors */
+.tree li:only-child::after,
+.tree li:only-child::before {
+  display: none;
+}
+
+.tree li:only-child {
+  padding-top: 0;
+}
+
+.tree li:first-child::before,
+.tree li:last-child::after {
+  border: 0;
+}
+
+/* ==== NODE STYLES ======================================================== */
+
+.tree li div {
+  padding: 0.45rem 0.9rem;
+  color: #f9fafb; /* gray-50 */
+  background: radial-gradient(circle at 20% 20%, #4f46e5, #1e1b4b); /* indigo */
+  font-size: 1rem;
+  display: inline-block;
+  border-radius: 9999px;
+  text-shadow: none;
+  box-shadow:
+    0 8px 20px rgba(15, 23, 42, 0.6),
+    inset 0 0 0 1px rgba(148, 163, 184, 0.3);
+  transition: all 0.25s ease;
+}
+
+/* highlighted node (search hit, etc.) */
+.tree li div.highlight {
+  color: #ffffff;
+  background: radial-gradient(circle at 20% 20%, #fb7185, #b91c1c); /* rose/red */
+  text-shadow:
+    0 0 5px #fde68a,
+    0 0 12px #fb7185;
+  box-shadow:
+    0 0 18px rgba(248, 113, 113, 0.9),
+    inset 0 0 0 1px rgba(254, 226, 226, 0.7);
+}
+
+.tree li div.highlight.red {
+  color: #ffffff;
+  background: #ef4444;
+  text-shadow:
+    0 0 5px #fee2e2,
+    0 0 10px #ef4444;
+}
+
+.tree li div.highlight.black {
+  color: #ffffff;
+  background: #020617;
+  text-shadow:
+    0 0 5px #e5e7eb,
+    0 0 10px #020617;
+}
+
+/* hover on node */
+.tree li div:hover,
+.tree li div:hover + ul li div.normal {
+  color: #f9fafb;
+  transform: translateY(-2px) scale(1.02);
+  box-shadow:
+    0 10px 24px rgba(79, 70, 229, 0.65),
+    inset 0 0 0 1px rgba(191, 219, 254, 0.6);
+}
+
+/* hover on connectors when parent hovered */
+.tree li div:hover + ul li::after,
+.tree li div:hover + ul li::before,
+.tree li div:hover + ul::before,
+.tree li div:hover + ul ul::before {
+  border-color: #9ca3af; /* gray-400 */
+}
+
+/* null nodes */
+li.null div {
+  color: #9ca3af;
+  background: transparent;
+  border-radius: 9999px;
+  border: 1px dashed #4b5563;
+  box-shadow: none;
+  font-size: 0.9rem;
+}
+
+.tree li.null div:hover,
+.tree li.null div:hover + ul li div {
+  color: #9ca3af;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ==== EXTRA INFO (HEIGHT, ERRORS) ======================================= */
+
+.height {
+  font-size: 0.8rem;
+  color: #9ca3af;
+}
+
+.error {
+  color: #f97373;
+  font-size: 0.8rem;
+}
+
+/* ==== TRAVERSAL + INFO CARDS ============================================ */
+
+/* top small traversal output box ("No Traversal Performed" / list) */
+.traversal {
+  max-width: 320px;
+  margin: 1.25rem 1rem 0;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  background: radial-gradient(circle at 0 0, rgba(79, 70, 229, 0.18), rgba(15, 23, 42, 1));
+  box-shadow:
+    inset 0 0 0 1px rgba(79, 70, 229, 0.5),
+    0 12px 30px rgba(15, 23, 42, 0.9);
+}
+
+.traversal ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  color: #e5e7eb;
+  font-weight: 600;
+  word-break: break-word;
+}
+
+.traversal p {
+  color: #9ca3af;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.traversal li {
+  display: inline;
+  padding: 3px;
+}
+
+/* optional second info box if you ever use it */
+.bstlist {
+  margin: 0.75rem 1rem 0;
+  padding: 1rem 1.25rem;
+  border-radius: 0.75rem;
+  background: radial-gradient(circle at 0 0, rgba(79, 70, 229, 0.18), rgba(15, 23, 42, 1));
+  box-shadow:
+    inset 0 0 0 1px rgba(79, 70, 229, 0.5),
+    0 12px 30px rgba(15, 23, 42, 0.9);
+}
+
+.bstlist ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  color: #e5e7eb;
+  font-weight: 600;
+}
+
+.bstlist p {
+  color: #9ca3af;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.bstlist li {
+  padding: 3px 0;
+}
+
+/* ==== TRAVERSAL BUTTON PANEL ============================================ */
+
+.traversal-pannel {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  margin: 2.5rem auto 3rem;
+  padding: 1.75rem 1.25rem;
+  background-color: #020617; /* slate-950 */
+  border-radius: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  box-shadow:
+    0 20px 40px rgba(15, 23, 42, 0.8),
+    inset 0 0 0 1px rgba(51, 65, 85, 0.8);
+}
+
+/* === RESPONSIVE TWEAKS =================================================== */
+
+@media screen and (min-width: 768px) {
+  .traversal {
+    margin-left: 2rem;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .traversal {
+    margin-left: 3rem;
+  }
+}
